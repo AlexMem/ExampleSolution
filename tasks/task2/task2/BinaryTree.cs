@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace task2 {
     public class BinaryTree<E> where E: IComparable<E> {
@@ -16,55 +17,55 @@ namespace task2 {
             public bool isLeaf() {
                 return left == null && right == null;
             }
-            
-            public TreeNode<T> connectLeft(T leftElement) {
+
+            private TreeNode<T> connectLeft(T leftElement) {
                 return connectLeft(new TreeNode<T>(leftElement));
             }
 
-            public TreeNode<T> connectLeft(TreeNode<T> leftNode) {
+            private TreeNode<T> connectLeft(TreeNode<T> leftNode) {
                 left = leftNode;
                 return left;
             }
-            
-            public TreeNode<T> connectRight(T rightElement) {
+
+            private TreeNode<T> connectRight(T rightElement) {
                 return connectRight(new TreeNode<T>(rightElement));
             }
 
-            public TreeNode<T> connectRight(TreeNode<T> rightNode) {
+            private TreeNode<T> connectRight(TreeNode<T> rightNode) {
                 right = rightNode;
                 return right;
             }
 
-            public TreeNode<T> rotateLeft() {
+            private TreeNode<T> rotateLeft() {
                 TreeNode<T> k = right;
                 right = k.left;
                 k.left = this;
                 return k;
             }
 
-            public TreeNode<T> rotateRight() {
+            private TreeNode<T> rotateRight() {
                 TreeNode<T> k = left;
                 left = k.right;
                 k.right = this;
                 return k;
             }
 
-            public void insert(T newElement) {
+            public TreeNode<T> insert(T newElement) {
                 if (newElement.CompareTo(element) < 0) {
                     if (left != null) {
-                        left.insert(newElement);
+                        left = left.insert(newElement);
                     } else {
                         connectLeft(newElement);
                     }
                 } else {
                     if (right != null) {
-                        right.insert(newElement);
+                        right = right.insert(newElement);
                     } else {
                         connectRight(newElement);
                     }
                 }
 
-                balance();
+                return balance();
             }
             
             public TreeNode<T> search(T sElement) {
@@ -100,26 +101,63 @@ namespace task2 {
                 return this;
             }
 
-            public TreeNode<T> getMin() {
+            private TreeNode<T> getMin() {
                 return left != null ? left.getMin() : this;
+            }
+
+            private TreeNode<T> removeMin() {
+                if (left == null) {
+                    return right;
+                }
+
+                left = left.removeMin();
+                return balance();
+            }
+
+            public TreeNode<T> remove(T delElement) {
+                if (delElement.CompareTo(element) < 0) {
+                    left = left.remove(delElement);
+                } else if (delElement.CompareTo(element) > 0) {
+                    right = right.remove(delElement);
+                } else {
+                    TreeNode<T> q = left;
+                    TreeNode<T> r = right;
+                    if (r == null) {
+                        return q;
+                    }
+
+                    TreeNode<T> min = r.getMin();
+                    min.right = r.removeMin();
+                    min.left = q;
+                    return min.balance();
+                }
+
+                return balance();
+            }
+
+            public void output(StringBuilder stringBuilder) {
+                left?.output(stringBuilder);
+                stringBuilder.Append(" " + element + " ");
+                right?.output(stringBuilder);
             }
             
             private int balanceFactor() {
+                if (left == null && right == null) return 0;
+                if (left == null) return right.height();
+                if (right == null) return -left.height();
                 return right.height() - left.height();
             }
         }
 
         private TreeNode<E> root;
-        private int size { get; }
 
         public BinaryTree() {
             root = null;
-            size = 0;
         }
 
         public BinaryTree<E> add(E element) {
             if (root != null) {
-                root.insert(element);
+                root = root.insert(element);
             } else {
                 root = new TreeNode<E>(element);
             }
@@ -128,9 +166,7 @@ namespace task2 {
         }
 
         public BinaryTree<E> delete(E element) {
-            var node = root.search(element);
-            var minNode = node.getMin();
-            //TODO
+            root = root.remove(element);
             return this;
         }
 
@@ -138,9 +174,10 @@ namespace task2 {
             return root.search(element).element;
         }
 
-        private void balance() {
-            root.balance();
+        public override string ToString() {
+            var result = new StringBuilder();
+            root.output(result);
+            return result.ToString();
         }
     }
 }
-    
