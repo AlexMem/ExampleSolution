@@ -1,0 +1,13 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "task1", "task1\task1.csproj", "{4E6B597F-2F37-4009-A11C-601E1810EEF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		default|Any CPU = default|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E6B597F-2F37-4009-A11C-601E1810EEF9}.default|Any CPU.ActiveCfg = default|Any CPU
+		{4E6B597F-2F37-4009-A11C-601E1810EEF9}.default|Any CPU.Build.0 = default|Any CPU
+	EndGlobalSection
+EndGlobal
