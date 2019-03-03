@@ -1,0 +1,13 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication", "ConsoleApplication.csproj", "{AA20D5BD-695A-4A07-841D-38A53EA41365}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		default|Any CPU = default|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA20D5BD-695A-4A07-841D-38A53EA41365}.default|Any CPU.ActiveCfg = default|Any CPU
+		{AA20D5BD-695A-4A07-841D-38A53EA41365}.default|Any CPU.Build.0 = default|Any CPU
+	EndGlobalSection
+EndGlobal
